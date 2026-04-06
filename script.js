@@ -1,79 +1,70 @@
-// حماية التوكن بتقسيم ذكي
-const k1 = "hf_pSQepoiciN";
-const k2 = "BeVnerWMUakure";
-const k3 = "cVXCCpTUZO";
-const AUTH_KEY = "Bearer " + k1 + k2 + k3;
+const p1 = "hf_pSQepoiciN";
+const p2 = "BeVnerWMUakure";
+const p3 = "cVXCCpTUZO";
+const KEY = "Bearer " + p1 + p2 + p3;
 
-const WORDS_LIST = ["مدرسة", "هاتف", "بحر", "قهوة", "تونس", "سيارة", "كتاب", "طائرة", "مزرعة", "قلم", "سلام", "جامعة"];
-let secretWord = "";
+const SECRETS = ["مدرسة", "هاتف", "بحر", "قهوة", "تونس", "سيارة", "كتاب", "طائرة", "مزرعة", "قلم"];
+let currentWord = "";
 
-const input = document.getElementById('wordInput');
-const btn = document.getElementById('guessBtn');
-const history = document.getElementById('history');
-const datePicker = document.getElementById('datePicker');
-
-// تشغيل عند البداية
 window.onload = () => {
-    datePicker.valueAsDate = new Date();
-    setupGame();
+    document.getElementById('datePicker').valueAsDate = new Date();
+    loadGame();
 };
 
-datePicker.onchange = setupGame;
-
-function setupGame() {
-    const day = new Date(datePicker.value).getDate();
-    secretWord = WORDS_LIST[day % WORDS_LIST.length];
-    history.innerHTML = "";
-    console.log("الكلمة جاهزة");
+function closeModal() {
+    document.getElementById('howToPlay').style.display = 'none';
 }
 
-async function processGuess() {
+function loadGame() {
+    const day = new Date(document.getElementById('datePicker').value).getDate();
+    currentWord = SECRETS[day % SECRETS.length];
+    document.getElementById('history').innerHTML = "";
+}
+
+async function play() {
+    const input = document.getElementById('wordInput');
     const guess = input.value.trim();
     if (!guess) return;
 
-    if (guess === secretWord) {
-        alert("🎉 مبروووك! الكلمة صحيحة!");
-        renderResult(guess, 1000, "var(--success)");
+    if (guess === currentWord) {
+        alert("🎉 مبروك! الكلمة صحيحة!");
+        addResult(guess, 1000, "#22c55e");
         return;
     }
 
-    btn.disabled = true;
+    const btn = document.getElementById('guessBtn');
     btn.innerText = "جاري التحليل...";
+    btn.disabled = true;
 
     try {
-        const response = await fetch("https://api-inference.huggingface.co/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2", {
+        const res = await fetch("https://api-inference.huggingface.co/models/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2", {
             method: "POST",
-            headers: { "Authorization": AUTH_KEY, "Content-Type": "application/json" },
-            body: JSON.stringify({ 
-                inputs: { source_sentence: secretWord, sentences: [guess] },
-                options: { wait_for_model: true }
-            })
+            headers: { "Authorization": KEY, "Content-Type": "application/json" },
+            body: JSON.stringify({ inputs: { source_sentence: currentWord, sentences: [guess] }, options: { wait_for_model: true } })
         });
-
-        const data = await response.json();
+        const data = await res.json();
         const score = Math.round(data[0] * 1000);
         
-        let color = "var(--danger)";
-        if (score > 750) color = "var(--success)";
-        else if (score > 450) color = "var(--warning)";
+        let color = "#ef4444";
+        if (score > 700) color = "#22c55e";
+        else if (score > 400) color = "#f59e0b";
 
-        renderResult(guess, score, color);
+        addResult(guess, score, color);
     } catch (e) {
-        alert("المحرك يسخن.. عاود جرب توّة!");
+        alert("المحرك يسخن.. عاود جرب!");
     } finally {
+        btn.innerText = "تحليل";
         btn.disabled = false;
-        btn.innerText = "تحليل الكلمة";
         input.value = "";
-        input.focus();
     }
 }
 
-function renderResult(word, score, color) {
-    const html = `<div class="word-row" style="border-right-color: ${color}"><span>${word}</span><b>${score}</b></div>`;
-    history.insertAdjacentHTML('afterbegin', html);
+function addResult(w, s, c) {
+    const row = `<div class="word-row" style="border-right-color: ${c}"><span>${w}</span><b>${s}</b></div>`;
+    document.getElementById('history').insertAdjacentHTML('afterbegin', row);
 }
 
-// أزرار المساعدة
-btn.onclick = processGuess;
-document.getElementById('hintBtn').onclick = () => alert("تبدأ بـ: " + secretWord[0]);
-document.getElementById('surrenderBtn').onclick = () => { alert("الكلمة هي: " + secretWord); setupGame(); };
+document.getElementById('guessBtn').onclick = play;
+document.getElementById('datePicker').onchange = loadGame;
+document.getElementById('hintBtn').onclick = () => alert("تبدأ بحرف: " + currentWord[0]);
+document.getElementById('surrenderBtn').onclick = () => { alert("الكلمة هي: " + currentWord); loadGame(); };
