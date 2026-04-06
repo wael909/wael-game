@@ -2,34 +2,46 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>سياق العربي | Contexto Arab</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="game-card">
-    <header>
-        <h1>🔍 سياق العربي</h1>
-        <div class="archive-zone">
-            <span>لغز يوم: </span>
-            <input type="date" id="datePicker">
+    <div id="howToPlay" class="modal">
+        <div class="modal-content">
+            <h2>🎮 كيف تلعب سياق؟</h2>
+            <p>1. خمن الكلمة السرية لليوم.</p>
+            <p>2. كل ما تكتب كلمة، الموقع يقلك قداش هي قريبة للمعنى (من 0 لـ 1000).</p>
+            <p>3. **1000** يعني لقيت الكلمة! 🟢</p>
+            <button onclick="closeModal()" class="btn-main">فهمت، هيا نلعب!</button>
         </div>
-    </header>
+    </div>
 
-    <main id="gameUI">
-        <input type="text" id="wordInput" placeholder="اكتب كلمتك هنا..." autocomplete="off">
-        <button class="main-btn" id="guessBtn">تحليل الكلمة</button>
-        
-        <div class="action-btns">
-            <button class="sec-btn btn-hint" id="hintBtn">💡 تلميح</button>
-            <button class="sec-btn btn-giveup" id="surrenderBtn">🏳️ استسلام</button>
+    <div class="app-wrapper">
+        <div class="game-card">
+            <header>
+                <h1>🔍 سياق العربي</h1>
+                <div class="date-badge">
+                    <span>لغز يوم:</span>
+                    <input type="date" id="datePicker">
+                </div>
+            </header>
+
+            <div class="game-area">
+                <div class="input-group">
+                    <input type="text" id="wordInput" placeholder="اكتب كلمتك هنا..." autofocus>
+                    <button id="guessBtn" class="btn-main">تحليل</button>
+                </div>
+
+                <div class="tools-group">
+                    <button id="hintBtn" class="btn-tool btn-hint">💡 تلميح</button>
+                    <button id="surrenderBtn" class="btn-tool btn-danger">🏳️ استسلام</button>
+                </div>
+            </div>
+
+            <div id="history" class="history-list"></div>
         </div>
-    </main>
-
-    <section class="history-list" id="history"></section>
-</div>
-
-<script src="script.js"></script>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
