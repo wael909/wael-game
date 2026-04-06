@@ -1,0 +1,114 @@
+:root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #f8fafc;
+    --primary: #3b82f6;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.game-card {
+    width: 100%;
+    max-width: 450px;
+    background: var(--card);
+    padding: 25px;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
+
+.archive-zone {
+    margin: 15px 0;
+    background: #334155;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+input[type="date"] {
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 18px;
+    border-radius: 15px;
+    border: 2px solid #334155;
+    background: #0f172a;
+    color: white;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    text-align: center;
+    outline: none;
+    box-sizing: border-box;
+}
+
+input[type="text"]:focus {
+    border-color: var(--primary);
+}
+
+.main-btn {
+    width: 100%;
+    padding: 18px;
+    border-radius: 15px;
+    border: none;
+    background: var(--primary);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.main-btn:disabled { opacity: 0.6; }
+
+.action-btns {
+    display: flex;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.sec-btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-hint { background: var(--warning); }
+.btn-giveup { background: var(--danger); }
+
+.history-list {
+    margin-top: 25px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.word-row {
+    display: flex;
+    justify-content: space-between;
+    background: #334155;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border-right: 8px solid var(--danger);
+    font-size: 1.2rem;
+}
