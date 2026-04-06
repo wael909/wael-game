@@ -4,43 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>سياق العربي | Contexto Arab</title>
-    <style>
-        :root { --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --primary: #3b82f6; --success: #22c55e; --warning: #f59e0b; --danger: #ef4444; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); display: flex; justify-content: center; min-height: 100vh; padding: 20px; margin: 0; }
-        .game-card { width: 100%; max-width: 450px; background: var(--card); padding: 25px; border-radius: 20px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-        .archive-zone { margin: 15px 0; background: #334155; padding: 10px; border-radius: 10px; }
-        input[type="text"] { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #334155; background: #0f172a; color: white; font-size: 1.3rem; margin-bottom: 15px; text-align: center; box-sizing: border-box; outline: none; }
-        input[type="text"]:focus { border-color: var(--primary); }
-        .main-btn { width: 100%; padding: 16px; border-radius: 12px; border: none; background: var(--primary); color: white; font-size: 1.2rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #1d4ed8; }
-        .main-btn:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
-        .action-btns { display: flex; gap: 10px; margin-top: 15px; }
-        .sec-btn { flex: 1; padding: 12px; border-radius: 10px; border: none; color: white; font-weight: bold; cursor: pointer; }
-        .btn-hint { background: var(--warning); }
-        .btn-giveup { background: var(--danger); }
-        .history-list { margin-top: 25px; max-height: 400px; overflow-y: auto; }
-        .word-row { display: flex; justify-content: space-between; background: #334155; padding: 15px; border-radius: 10px; margin-bottom: 10px; border-right: 8px solid var(--danger); transition: 0.3s; }
-        .rank-box { font-weight: bold; font-size: 1.1rem; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="game-card">
-    <h1 style="margin:0 0 10px 0;">🔍 سياق العربي</h1>
-    <div class="archive-zone">
-        <span>لغز يوم: </span>
-        <input type="date" id="datePicker" onchange="initGame()">
-    </div>
-    <div id="gameUI">
-        <input type="text" id="wordInput" placeholder="اكتب كلمتك هنا..." autocomplete="off">
-        <button class="main-btn" id="guessBtn" onclick="processGuess()">تحليل الكلمة</button>
-        <div class="action-btns">
-            <button class="sec-btn btn-hint" onclick="getHint()">💡 تلميح</button>
-            <button class="sec-btn btn-giveup" onclick="surrender()">🏳️ استسلام</button>
+    <header>
+        <h1>🔍 سياق العربي</h1>
+        <div class="archive-zone">
+            <span>لغز يوم: </span>
+            <input type="date" id="datePicker">
         </div>
-    </div>
-    <div class="history-list" id="history"></div>
+    </header>
+
+    <main id="gameUI">
+        <input type="text" id="wordInput" placeholder="اكتب كلمتك هنا..." autocomplete="off">
+        <button class="main-btn" id="guessBtn">تحليل الكلمة</button>
+        
+        <div class="action-btns">
+            <button class="sec-btn btn-hint" id="hintBtn">💡 تلميح</button>
+            <button class="sec-btn btn-giveup" id="surrenderBtn">🏳️ استسلام</button>
+        </div>
+    </main>
+
+    <section class="history-list" id="history"></section>
 </div>
 
-<script>
-    // خدعة حماية التوكن من GitHub
-    const a = "hf
+<script src="script.js"></script>
+</body>
+</html>
